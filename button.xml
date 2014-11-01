@@ -1,0 +1,97 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<Frame name="QVFrame" parent="UIParent" hidden="true">
+		<Size>
+			<AbsDimension x="1" y="1" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent">
+				<Offset>
+					<AbsDimension x="-270" y="245" />
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="false"/>
+		<Frames>
+			<Button name="SellGreysButton" parent="MerchantFrame" frameStrata="MEDIUM">
+				<Size>
+					<AbsDimension x="32" y="32" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="60" y="-25"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnEnter>
+						self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+						GameTooltip_SetDefaultAnchor(GameTooltip,SellGreysButton);
+						GameTooltip:ClearAllPoints();
+						GameTooltip:SetPoint("BOTTOMLEFT",SellGreysButton,"BOTTOMRIGHT",0,-80);
+						GameTooltip:AddLine("Functionality:", 1, 1, 1);
+						GameTooltip:AddLine("Left-Click to sell all greys.", 1, 1, 1);
+						GameTooltip:AddLine(" ", 1, 1, 1);
+						GameTooltip:AddLine("SHIFT+Right-Click to sell ALL items", 1, 1, 1);
+						GameTooltip:AddLine("in your leftmost (in standard UIs) non-empty bag.", 1, 1, 1);
+						GameTooltip:AddLine(" ", 1, 1, 1);
+						if GetNumberOfGreys() == 1 then
+							GameTooltip:AddLine("You have 1 grey item in your inventory, " .. GetFirstGreyItem() .. ", and its value is " .. GetValueOfGreys() .. ".", 1, 1, 1);
+						elseif GetNumberOfGreys() == 0 then
+							GameTooltip:AddLine("You have no grey items in your inventory.", 1, 1, 1);
+						else
+							GameTooltip:AddLine("You have " .. GetNumberOfGreys() .. " grey items in your inventory, with a total value of " .. GetValueOfGreys() .. ".", 1, 1, 1);
+						end
+						GameTooltip:AddLine("Your leftmost non-empty bag is: " .. GetInventoryItemLink("Player", 19 + GetLeftmostPopulatedBag()) .. " (Slot " .. GetLeftmostPopulatedBag() .. ")",1,1,1);
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave> GameTooltip:Hide() </OnLeave>
+					<OnClick> if button == "LeftButton" then SellGreys() elseif button == "RightButton" and IsShiftKeyDown() then SellLeftmost() end; </OnClick>
+				</Scripts>
+				<NormalTexture file="Interface\Icons\inv_misc_coin_17">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</NormalTexture>
+				<HighlightTexture file="Interface\Buttons\ButtonHilight-Square" alphaMode="ADD">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</HighlightTexture>
+				<PushedTexture file="Interface\Icons\inv_misc_coin_17">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="1" y="-1"/>
+							</Offset>
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="-1" y="1"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</PushedTexture>
+			</Button>
+		</Frames>
+	</Frame>
+</Ui>
+
