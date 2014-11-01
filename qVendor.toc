@@ -1,0 +1,8 @@
+## Interface: 60000
+## Title: qVendor
+## Notes: A suite for automating vendor tasks.
+## Author: QuixoticTendencies
+## Version: 0.01
+
+button.xml
+main.lua
